@@ -6,17 +6,20 @@ const {
   refetchUserController,
 } = require("../controllers/authController");
 const router = express.Router();
+const bookmarkRoutes = require('./bookmarkRoutes'); // Import bookmark routes
 
-//REGISTER
+// REGISTER
 router.post("/register", registerController);
 
-//LOGIN
+// LOGIN
 router.post("/login", loginController);
 
-///LOGOUT
+// LOGOUT
 router.get("/logout", logoutController);
 
-//FETCH CURRENT USER
+// FETCH CURRENT USER
 router.get("/refetch", refetchUserController);
+
+router.use('/bookmarks', bookmarkRoutes); // Add bookmark routes
 
 module.exports = router;

@@ -1,9 +1,27 @@
 import React from "react";
 
-const Post = ({ setExchange }) => {
+const Post = ({ post, setExchange }) => {
   const redirectTo = (url) => {
     window.location.href = "/create";
   };
+
+  const addBookmark = async (postId) => {
+    const response = await fetch('/api/bookmarks', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({ postId })
+    });
+
+    if (response.ok) {
+      alert('Post bookmarked successfully!');
+    } else {
+      alert('Failed to bookmark post.');
+    }
+  };
+
   return (
     <div className="mb-7 mt-2 hidden md:block md:pr-2 ">
       <div className="flex w-full items-center gap-2 md:gap-4">
@@ -41,6 +59,13 @@ const Post = ({ setExchange }) => {
         </button>
         <button className="c-bPnuSX c-bPnuSX-SFeiM-size-S c-bPnuSX-kiaVWo-variant-primary bg-base800/30' bottom-0 right-0 flex h-10 items-center justify-center !rounded-[100px]">
           Post
+        </button>
+        {/* Add Bookmark Button */}
+        <button
+          onClick={() => addBookmark(post._id)}
+          className="c-bPnuSX c-bPnuSX-SFeiM-size-S c-bPnuSX-kiaVWo-variant-primary bg-base800/30' bottom-0 right-0 flex h-10 items-center justify-center !rounded-[100px]"
+        >
+          Bookmark
         </button>
       </div>
     </div>
